@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.baizhi.dao.UserDAO">
+
+<select id="queryByPage" resultType="User">
+    select * from user limit #{i}, #{rows}
+</select>
+
+    <update id="edit">
+        update  user set status=#{status} where id=#{id}
+    </update>
+<select id="selectRecords" resultType="Integer">
+    select count(*) from user
+</select>
+<select id="selectAll" resultType="User">
+    select * from user
+</select>
+
+    <!--根据性别查询出所有城市的人数-->
+    <select id="selectByCity" resultType="City">
+        select city as name,count(*) as value from user where sex=#{sex} group by city
+    </select>
+
+    <!--查询出所有有人注册过的月份-->
+    <select id="selectMonths" resultType="String">
+        select concat(month(crea_date),'月') months from user GROUP BY month(crea_date)
+    </select>
+
+    <!--根据性别和月份查询出所有的人数-->
+    <select id="selectBySexMonth" resultType="int">
+        select count(*) count from user where sex=#{sex} and (concat(month(crea_date),'月'))=#{month}
+    </select>
+<insert id="add">
+    insert  into user values(#{id},#{avater},#{phone},#{password},#{salt},#{status},#{name},
+    #{law_name},#{sex},#{city},#{sign},#{crea_date},#{guru_id})
+</insert>
+
+</mapper>

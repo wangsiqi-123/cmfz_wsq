@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.baizhi.dao.AlbumDAO">
+<select id="queryByPage" resultType="Album">
+     select * from album limit #{i},#{rows}
+</select>
+
+    <select id="queryRecords" resultType="Integer">
+        select count(*) from album
+    </select>
+
+    <insert id="add">
+    insert into album values(#{id},#{title},#{cover},#{author},#{score},#{broadcast},#{counts},#{content},#{crea_date})
+    </insert>
+
+    <update id="edit">
+        update album
+        <set>
+            <if test="title!=null">
+                title=#{title},
+            </if>
+            <if test="cover!=null and cover!=''">
+                cover=#{cover},
+            </if>
+            <if test="author!=null">
+                author=#{author},
+            </if>
+            <if test="score!=null">
+                score=#{score},
+            </if>
+            <if test="broadcast!=null">
+                broadcast=#{broadcast},
+            </if>
+            <if test="counts!=null">
+                counts=#{counts},
+            </if>
+            <if test="content!=null">
+                content=#{content},
+            </if>
+            <if test="crea_date!=null">
+                crea_date=#{crea_date}
+            </if>
+        </set>
+        where id =#{id}
+    </update>
+    <delete id="delete">
+        delete from album where id=#{id}
+    </delete>
+    <select id="queryById" resultType="Album">
+        select * from album where id=#{id}
+    </select>
+
+
+</mapper>
